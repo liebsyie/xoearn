@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Circle, RotateCcw, Brain, User } from 'lucide-react';
+import { X, Circle, RotateCcw, Brain, User, Trophy } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 interface GameProps {
@@ -108,70 +108,81 @@ export const Game: React.FC<GameProps> = ({ onWin, onUpdateStatus }) => {
 
   return (
     <div className="min-h-screen bg-zinc-950 text-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+      {/* Immersive Background */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/5 blur-[140px] rounded-full opacity-50"></div>
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+      </div>
 
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-md w-full space-y-10 relative z-10"
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="max-w-md w-full space-y-12 relative z-10"
       >
-        <div className="text-center space-y-4">
-          <div className="inline-flex items-center gap-4 px-6 py-3 rounded-2xl bg-zinc-900/50 border border-zinc-800 backdrop-blur-xl">
-            <div className={`flex items-center gap-2 transition-opacity ${isPlayerTurn ? 'opacity-100' : 'opacity-40'}`}>
-              <div className="w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center">
-                <User className="w-4 h-4 text-emerald-400" />
+        <div className="text-center space-y-6">
+          <div className="inline-flex items-center gap-6 px-8 py-4 rounded-[2rem] glass border-white/5 shadow-2xl">
+            <div className={`flex items-center gap-3 transition-all duration-500 ${isPlayerTurn ? 'opacity-100 scale-105' : 'opacity-30 scale-95'}`}>
+              <div className="w-10 h-10 bg-emerald-500/20 rounded-2xl flex items-center justify-center border border-emerald-500/20">
+                <User className="w-5 h-5 text-emerald-400" />
               </div>
-              <span className="text-xs font-black uppercase tracking-widest">You (X)</span>
+              <div className="text-left">
+                <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Player</p>
+                <p className="text-xs font-black text-white">YOU (X)</p>
+              </div>
             </div>
-            <div className="w-px h-4 bg-zinc-800"></div>
-            <div className={`flex items-center gap-2 transition-opacity ${!isPlayerTurn ? 'opacity-100' : 'opacity-40'}`}>
-              <div className="w-8 h-8 bg-rose-500/20 rounded-lg flex items-center justify-center">
-                <Brain className="w-4 h-4 text-rose-400" />
+            <div className="w-px h-8 bg-white/5"></div>
+            <div className={`flex items-center gap-3 transition-all duration-500 ${!isPlayerTurn ? 'opacity-100 scale-105' : 'opacity-30 scale-95'}`}>
+              <div className="text-right">
+                <p className="text-[10px] font-black text-rose-500 uppercase tracking-widest">System</p>
+                <p className="text-xs font-black text-white">AI (O)</p>
               </div>
-              <span className="text-xs font-black uppercase tracking-widest">AI (O)</span>
+              <div className="w-10 h-10 bg-rose-500/20 rounded-2xl flex items-center justify-center border border-rose-500/20">
+                <Brain className="w-5 h-5 text-rose-400" />
+              </div>
             </div>
           </div>
           
-          <div className="space-y-1">
-            <h2 className="text-4xl font-black tracking-tight text-gradient">The Challenge</h2>
-            <p className="text-zinc-500 font-medium">Beat the AI to unlock the ₱1,000 prize wheel</p>
+          <div className="space-y-2">
+            <h2 className="text-5xl font-black tracking-tight text-gradient">THE ARENA</h2>
+            <p className="text-zinc-500 font-medium text-sm">Defeat the system to unlock the prize vault.</p>
           </div>
         </div>
 
         <div className="relative group">
-          <div className="absolute -inset-4 bg-gradient-to-r from-emerald-500/20 to-cyan-500/20 rounded-[2.5rem] blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          <div className="relative grid grid-cols-3 gap-4 bg-zinc-900/80 backdrop-blur-2xl p-6 rounded-[2.5rem] shadow-2xl border border-zinc-800">
+          <div className="absolute -inset-8 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-[3rem] blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <div className="relative grid grid-cols-3 gap-4 glass-card p-8 rounded-[3rem] shadow-2xl">
             {board.map((cell, i) => {
               const isWinningSquare = winningLine?.includes(i);
               return (
                 <motion.button
                   key={i}
-                  whileHover={!cell && !winner ? { scale: 1.02, backgroundColor: 'rgba(39, 39, 42, 0.8)' } : {}}
+                  whileHover={!cell && !winner ? { scale: 1.02, backgroundColor: 'rgba(255, 255, 255, 0.03)' } : {}}
                   whileTap={!cell && !winner ? { scale: 0.95 } : {}}
                   onClick={() => handleClick(i)}
-                  className={`relative h-24 sm:h-28 rounded-2xl flex items-center justify-center transition-all duration-300 ${
-                    cell ? 'bg-zinc-800/50' : 'bg-zinc-800/20 hover:bg-zinc-800/40'
-                  } ${isWinningSquare ? 'ring-2 ring-emerald-500/50 bg-emerald-500/10' : ''}`}
+                  className={`relative h-24 sm:h-28 rounded-[1.5rem] flex items-center justify-center transition-all duration-500 ${
+                    cell ? 'bg-white/[0.02]' : 'bg-white/[0.01] hover:bg-white/[0.04]'
+                  } ${isWinningSquare ? 'ring-2 ring-emerald-500/50 bg-emerald-500/10 shadow-[0_0_30px_-10px_rgba(16,185,129,0.5)]' : 'border border-white/5'}`}
                 >
                   <AnimatePresence mode="wait">
                     {cell === 'X' && (
                       <motion.div
-                        initial={{ scale: 0, rotate: -45, opacity: 0 }}
+                        initial={{ scale: 0.5, rotate: -45, opacity: 0 }}
                         animate={{ scale: 1, rotate: 0, opacity: 1 }}
                         className="relative"
                       >
                         <X className={`w-12 h-12 ${isWinningSquare ? 'text-emerald-400' : 'text-emerald-500'}`} strokeWidth={3} />
-                        <div className="absolute inset-0 blur-lg bg-emerald-500/20 opacity-50"></div>
+                        <div className="absolute inset-0 blur-xl bg-emerald-500/30 opacity-50"></div>
                       </motion.div>
                     )}
                     {cell === 'O' && (
                       <motion.div
-                        initial={{ scale: 0, opacity: 0 }}
+                        initial={{ scale: 0.5, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
                         className="relative"
                       >
                         <Circle className={`w-10 h-10 ${isWinningSquare ? 'text-rose-400' : 'text-rose-500'}`} strokeWidth={3} />
-                        <div className="absolute inset-0 blur-lg bg-rose-500/20 opacity-50"></div>
+                        <div className="absolute inset-0 blur-xl bg-rose-500/30 opacity-50"></div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -181,30 +192,45 @@ export const Game: React.FC<GameProps> = ({ onWin, onUpdateStatus }) => {
           </div>
         </div>
 
-        <div className="flex flex-col items-center gap-6">
-          <div className="h-10 flex items-center justify-center">
+        <div className="flex flex-col items-center gap-8">
+          <div className="h-12 flex items-center justify-center">
             <AnimatePresence mode="wait">
               {winner === 'X' && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-2 text-emerald-400 font-black text-2xl italic tracking-tight">
-                  VICTORY UNLOCKED! 🎉
+                <motion.div 
+                  initial={{ opacity: 0, y: 10, scale: 0.9 }} 
+                  animate={{ opacity: 1, y: 0, scale: 1 }} 
+                  className="flex items-center gap-3 text-emerald-400 font-black text-3xl italic tracking-tight"
+                >
+                  <Trophy className="w-8 h-8" />
+                  SYSTEM OVERRIDDEN!
                 </motion.div>
               )}
               {winner === 'O' && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-2 text-rose-400 font-black text-2xl italic tracking-tight">
-                  AI DOMINATED. TRY AGAIN.
+                <motion.div 
+                  initial={{ opacity: 0, y: 10, scale: 0.9 }} 
+                  animate={{ opacity: 1, y: 0, scale: 1 }} 
+                  className="flex items-center gap-3 text-rose-400 font-black text-2xl italic tracking-tight"
+                >
+                  <Brain className="w-8 h-8" />
+                  AI DOMINANCE DETECTED.
                 </motion.div>
               )}
               {winner === 'Draw' && (
-                <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex items-center gap-2 text-zinc-400 font-black text-2xl italic tracking-tight">
-                  STALEMATE. REPLAY.
+                <motion.div 
+                  initial={{ opacity: 0, y: 10, scale: 0.9 }} 
+                  animate={{ opacity: 1, y: 0, scale: 1 }} 
+                  className="flex items-center gap-3 text-zinc-400 font-black text-2xl italic tracking-tight"
+                >
+                  <RotateCcw className="w-8 h-8" />
+                  STALEMATE. RETRY.
                 </motion.div>
               )}
               {!winner && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-3 text-zinc-500 font-bold uppercase tracking-widest text-xs">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 px-6 py-2 rounded-full glass border-white/5 text-zinc-500 font-black uppercase tracking-[0.2em] text-[10px]">
                   {isPlayerTurn ? (
-                    <><div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div> Your Move</>
+                    <><span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span> Waiting for Input</>
                   ) : (
-                    <><Loader2 className="w-3 h-3 animate-spin" /> AI Processing</>
+                    <><Loader2 className="w-3 h-3 animate-spin text-rose-500" /> System Calculating</>
                   )}
                 </motion.div>
               )}
@@ -213,15 +239,15 @@ export const Game: React.FC<GameProps> = ({ onWin, onUpdateStatus }) => {
 
           {(winner === 'O' || winner === 'Draw') && (
             <motion.button
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              whileHover={{ scale: 1.05 }}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={resetGame}
-              className="flex items-center gap-3 px-8 py-4 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-2xl text-white font-bold transition-all shadow-xl"
+              className="flex items-center gap-4 px-10 py-5 bg-white text-zinc-950 rounded-2xl font-black text-lg transition-all shadow-2xl shadow-white/10"
             >
-              <RotateCcw className="w-5 h-5 text-emerald-500" />
-              Try Again
+              <RotateCcw className="w-5 h-5" />
+              RESTART CHALLENGE
             </motion.button>
           )}
         </div>
