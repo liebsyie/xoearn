@@ -158,7 +158,7 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
@@ -169,12 +169,12 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-zinc-950">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
       {/* Auth Overlay */}
       {showAuth && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
-          <div 
-            className="absolute inset-0 bg-zinc-950/80 backdrop-blur-sm"
+          <div
+            className="absolute inset-0 bg-slate-900/30 backdrop-blur-sm"
             onClick={() => setShowAuth(false)}
           ></div>
           <div className="relative z-10 w-full max-w-md">
@@ -187,28 +187,28 @@ export default function App() {
       {view !== 'admin' && (
         <div className="fixed top-4 right-4 z-40 flex items-center gap-3">
           {session ? (
-            <div className="flex items-center gap-3 bg-zinc-900/80 backdrop-blur-md border border-zinc-800 p-1 pr-4 rounded-full">
-              <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-zinc-950 font-bold">
+            <div className="flex items-center gap-3 bg-white/80 backdrop-blur-md border border-slate-200 p-1 pr-4 rounded-full shadow-lg">
+              <div className="w-8 h-8 bg-emerald-500 rounded-full flex items-center justify-center text-white font-bold">
                 {session.user.email?.[0].toUpperCase() || <User size={16} />}
               </div>
               <div className="hidden sm:block">
-                <p className="text-[10px] text-zinc-500 font-bold uppercase tracking-wider">Signed In</p>
-                <p className="text-xs text-white font-bold truncate max-w-[120px]">
+                <p className="text-[10px] text-slate-500 font-bold uppercase tracking-wider">Signed In</p>
+                <p className="text-xs text-slate-900 font-bold truncate max-w-[120px]">
                   {session.user.email || 'User'}
                 </p>
               </div>
-              <button 
+              <button
                 onClick={() => supabase.auth.signOut()}
-                className="p-2 text-zinc-500 hover:text-rose-400 transition-colors"
+                className="p-2 text-slate-400 hover:text-rose-500 transition-colors"
                 title="Sign Out"
               >
                 <LogOut size={16} />
               </button>
             </div>
           ) : (
-            <button 
+            <button
               onClick={() => setShowAuth(true)}
-              className="px-4 py-2 bg-zinc-900/80 backdrop-blur-md border border-zinc-800 rounded-full text-xs text-white font-bold hover:bg-zinc-800 transition-all"
+              className="px-4 py-2 bg-white/80 backdrop-blur-md border border-slate-200 rounded-full text-xs text-slate-900 font-bold hover:bg-slate-50 transition-all shadow-lg"
             >
               Sign In
             </button>
@@ -247,13 +247,15 @@ export default function App() {
       )}
 
       {/* Hidden link to admin for convenience during development */}
-      <a 
-        href="#admin" 
-        className="fixed bottom-4 right-4 p-2 bg-zinc-900/50 hover:bg-zinc-800 rounded-lg text-[10px] text-zinc-600 hover:text-zinc-400 transition-all border border-zinc-800/50 flex items-center gap-1"
-      >
-        <span className="w-1 h-1 bg-emerald-500 rounded-full animate-pulse"></span>
-        Admin Panel
-      </a>
+      {view !== 'welcome' && view !== 'game' && view !== 'spin' && view !== 'cashout' && (
+        <a
+          href="#admin"
+          className="fixed bottom-4 right-4 p-2 bg-slate-200/80 hover:bg-slate-300 rounded-lg text-[10px] text-slate-600 hover:text-slate-900 transition-all border border-slate-300 flex items-center gap-1"
+        >
+          <span className="w-1 h-1 bg-emerald-500 rounded-full animate-pulse"></span>
+          Admin Panel
+        </a>
+      )}
     </div>
   );
 }

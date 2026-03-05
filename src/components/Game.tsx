@@ -107,11 +107,11 @@ export const Game: React.FC<GameProps> = ({ onWin, onUpdateStatus }) => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 text-white flex flex-col items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-purple-100 text-slate-900 flex flex-col items-center justify-center p-6 relative overflow-hidden">
       {/* Immersive Background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/5 blur-[140px] rounded-full opacity-50"></div>
-        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-300/20 blur-[140px] rounded-full opacity-40"></div>
+        <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-5 mix-blend-overlay"></div>
       </div>
 
       <motion.div
@@ -121,48 +121,48 @@ export const Game: React.FC<GameProps> = ({ onWin, onUpdateStatus }) => {
         className="max-w-md w-full space-y-12 relative z-10"
       >
         <div className="text-center space-y-6">
-          <div className="inline-flex items-center gap-6 px-8 py-4 rounded-[2rem] glass border-white/5 shadow-2xl">
+          <div className="inline-flex items-center gap-6 px-8 py-4 rounded-[2rem] bg-white/70 backdrop-blur-xl border border-slate-200 shadow-xl">
             <div className={`flex items-center gap-3 transition-all duration-500 ${isPlayerTurn ? 'opacity-100 scale-105' : 'opacity-30 scale-95'}`}>
-              <div className="w-10 h-10 bg-emerald-500/20 rounded-2xl flex items-center justify-center border border-emerald-500/20">
-                <User className="w-5 h-5 text-emerald-400" />
+              <div className="w-10 h-10 bg-emerald-100 rounded-2xl flex items-center justify-center border border-emerald-300">
+                <User className="w-5 h-5 text-emerald-600" />
               </div>
               <div className="text-left">
-                <p className="text-[10px] font-black text-emerald-500 uppercase tracking-widest">Player</p>
-                <p className="text-xs font-black text-white">YOU (X)</p>
+                <p className="text-[10px] font-black text-emerald-700 uppercase tracking-widest">Player</p>
+                <p className="text-xs font-black text-slate-900">YOU (X)</p>
               </div>
             </div>
-            <div className="w-px h-8 bg-white/5"></div>
+            <div className="w-px h-8 bg-slate-300"></div>
             <div className={`flex items-center gap-3 transition-all duration-500 ${!isPlayerTurn ? 'opacity-100 scale-105' : 'opacity-30 scale-95'}`}>
               <div className="text-right">
-                <p className="text-[10px] font-black text-rose-500 uppercase tracking-widest">System</p>
-                <p className="text-xs font-black text-white">AI (O)</p>
+                <p className="text-[10px] font-black text-rose-700 uppercase tracking-widest">System</p>
+                <p className="text-xs font-black text-slate-900">AI (O)</p>
               </div>
-              <div className="w-10 h-10 bg-rose-500/20 rounded-2xl flex items-center justify-center border border-rose-500/20">
-                <Brain className="w-5 h-5 text-rose-400" />
+              <div className="w-10 h-10 bg-rose-100 rounded-2xl flex items-center justify-center border border-rose-300">
+                <Brain className="w-5 h-5 text-rose-600" />
               </div>
             </div>
           </div>
           
           <div className="space-y-2">
             <h2 className="text-5xl font-black tracking-tight text-gradient">THE ARENA</h2>
-            <p className="text-zinc-500 font-medium text-sm">Defeat the system to unlock the prize vault.</p>
+            <p className="text-slate-600 font-medium text-sm">Defeat the system to unlock the prize vault.</p>
           </div>
         </div>
 
         <div className="relative group">
-          <div className="absolute -inset-8 bg-gradient-to-r from-emerald-500/10 to-cyan-500/10 rounded-[3rem] blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
-          <div className="relative grid grid-cols-3 gap-4 glass-card p-8 rounded-[3rem] shadow-2xl">
+          <div className="absolute -inset-8 bg-gradient-to-r from-emerald-400/30 to-cyan-400/30 rounded-[3rem] blur-3xl opacity-50 group-hover:opacity-100 transition-opacity duration-700"></div>
+          <div className="relative grid grid-cols-3 gap-3 bg-white/90 backdrop-blur-lg p-8 rounded-[3rem] shadow-2xl border border-slate-200">
             {board.map((cell, i) => {
               const isWinningSquare = winningLine?.includes(i);
               return (
                 <motion.button
                   key={i}
-                  whileHover={!cell && !winner ? { scale: 1.02, backgroundColor: 'rgba(255, 255, 255, 0.03)' } : {}}
+                  whileHover={!cell && !winner ? { scale: 1.05, backgroundColor: '#f3f4f6' } : {}}
                   whileTap={!cell && !winner ? { scale: 0.95 } : {}}
                   onClick={() => handleClick(i)}
-                  className={`relative h-24 sm:h-28 rounded-[1.5rem] flex items-center justify-center transition-all duration-500 ${
-                    cell ? 'bg-white/[0.02]' : 'bg-white/[0.01] hover:bg-white/[0.04]'
-                  } ${isWinningSquare ? 'ring-2 ring-emerald-500/50 bg-emerald-500/10 shadow-[0_0_30px_-10px_rgba(16,185,129,0.5)]' : 'border border-white/5'}`}
+                  className={`relative h-24 sm:h-28 rounded-2xl flex items-center justify-center transition-all duration-300 font-black ${
+                    cell ? 'bg-slate-50' : 'bg-white hover:bg-gray-100 cursor-pointer'
+                  } ${isWinningSquare ? 'ring-4 ring-emerald-500 bg-emerald-50 shadow-lg' : 'border-2 border-slate-300 hover:border-emerald-400'}`}
                 >
                   <AnimatePresence mode="wait">
                     {cell === 'X' && (
@@ -171,8 +171,7 @@ export const Game: React.FC<GameProps> = ({ onWin, onUpdateStatus }) => {
                         animate={{ scale: 1, rotate: 0, opacity: 1 }}
                         className="relative"
                       >
-                        <X className={`w-12 h-12 ${isWinningSquare ? 'text-emerald-400' : 'text-emerald-500'}`} strokeWidth={3} />
-                        <div className="absolute inset-0 blur-xl bg-emerald-500/30 opacity-50"></div>
+                        <X className={`w-14 h-14 ${isWinningSquare ? 'text-emerald-600' : 'text-emerald-500'}`} strokeWidth={3} />
                       </motion.div>
                     )}
                     {cell === 'O' && (
@@ -181,8 +180,7 @@ export const Game: React.FC<GameProps> = ({ onWin, onUpdateStatus }) => {
                         animate={{ scale: 1, opacity: 1 }}
                         className="relative"
                       >
-                        <Circle className={`w-10 h-10 ${isWinningSquare ? 'text-rose-400' : 'text-rose-500'}`} strokeWidth={3} />
-                        <div className="absolute inset-0 blur-xl bg-rose-500/30 opacity-50"></div>
+                        <Circle className={`w-12 h-12 ${isWinningSquare ? 'text-rose-600' : 'text-rose-500'}`} strokeWidth={3} />
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -196,41 +194,41 @@ export const Game: React.FC<GameProps> = ({ onWin, onUpdateStatus }) => {
           <div className="h-12 flex items-center justify-center">
             <AnimatePresence mode="wait">
               {winner === 'X' && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10, scale: 0.9 }} 
-                  animate={{ opacity: 1, y: 0, scale: 1 }} 
-                  className="flex items-center gap-3 text-emerald-400 font-black text-3xl italic tracking-tight"
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  className="flex items-center gap-3 text-emerald-600 font-black text-3xl italic tracking-tight"
                 >
                   <Trophy className="w-8 h-8" />
                   SYSTEM OVERRIDDEN!
                 </motion.div>
               )}
               {winner === 'O' && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10, scale: 0.9 }} 
-                  animate={{ opacity: 1, y: 0, scale: 1 }} 
-                  className="flex items-center gap-3 text-rose-400 font-black text-2xl italic tracking-tight"
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  className="flex items-center gap-3 text-rose-600 font-black text-2xl italic tracking-tight"
                 >
                   <Brain className="w-8 h-8" />
                   AI DOMINANCE DETECTED.
                 </motion.div>
               )}
               {winner === 'Draw' && (
-                <motion.div 
-                  initial={{ opacity: 0, y: 10, scale: 0.9 }} 
-                  animate={{ opacity: 1, y: 0, scale: 1 }} 
-                  className="flex items-center gap-3 text-zinc-400 font-black text-2xl italic tracking-tight"
+                <motion.div
+                  initial={{ opacity: 0, y: 10, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  className="flex items-center gap-3 text-slate-600 font-black text-2xl italic tracking-tight"
                 >
                   <RotateCcw className="w-8 h-8" />
                   STALEMATE. RETRY.
                 </motion.div>
               )}
               {!winner && (
-                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 px-6 py-2 rounded-full glass border-white/5 text-zinc-500 font-black uppercase tracking-[0.2em] text-[10px]">
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center gap-4 px-6 py-2 rounded-full bg-white/70 backdrop-blur-lg border border-slate-200 text-slate-600 font-black uppercase tracking-[0.2em] text-[10px]">
                   {isPlayerTurn ? (
-                    <><span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span></span> Waiting for Input</>
+                    <><span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-600"></span></span> Waiting for Input</>
                   ) : (
-                    <><Loader2 className="w-3 h-3 animate-spin text-rose-500" /> System Calculating</>
+                    <><Loader2 className="w-3 h-3 animate-spin text-rose-600" /> System Calculating</>
                   )}
                 </motion.div>
               )}
@@ -244,7 +242,7 @@ export const Game: React.FC<GameProps> = ({ onWin, onUpdateStatus }) => {
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.95 }}
               onClick={resetGame}
-              className="flex items-center gap-4 px-10 py-5 bg-white text-zinc-950 rounded-2xl font-black text-lg transition-all shadow-2xl shadow-white/10"
+              className="flex items-center gap-4 px-10 py-5 bg-emerald-500 text-white rounded-2xl font-black text-lg transition-all shadow-xl hover:shadow-emerald-500/40 hover:bg-emerald-600"
             >
               <RotateCcw className="w-5 h-5" />
               RESTART CHALLENGE
