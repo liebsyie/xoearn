@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
-import { Users, Check, X, Clock, Shield, ArrowLeft, Lock, Phone, Calendar, MapPin } from 'lucide-react';
+import { Users, Check, X, Clock, Shield, ArrowLeft, Lock, Phone, Calendar, MapPin, Trash2 } from 'lucide-react';
 import { Participant } from '../types';
 import { supabase, isSupabaseConfigured } from '../supabase';
 
@@ -8,6 +8,8 @@ export const AdminDashboard: React.FC = () => {
   const [participants, setParticipants] = useState<Participant[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [deleteParticipant, setDeleteParticipant] = useState<Participant | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,6 +64,26 @@ export const AdminDashboard: React.FC = () => {
       if (channel) supabase?.removeChannel(channel);
     };
   }, []);
+
+  const handleDeleteParticipant = async (participant: Participant) => {
+    setDeleting(true);
+    try {
+      const { error } = await supabase
+        .from('participants')
+        .delete()
+        .eq('id', participant.id);
+      
+      if (error) throw error;
+      
+      // Success - the real-time subscription will update the UI
+      setDeleteParticipant(null);
+    } catch (err: any) {
+      console.error('Delete failed:', err);
+      setError(`Delete failed: ${err.message}`);
+    } finally {
+      setDeleting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 text-slate-900 p-6 sm:p-12 relative overflow-hidden">
@@ -185,12 +207,13 @@ export const AdminDashboard: React.FC = () => {
                   <th className="p-8 text-[10px] font-black text-slate-700 uppercase tracking-[0.3em]">Interaction Log</th>
                   <th className="p-8 text-[10px] font-black text-slate-700 uppercase tracking-[0.3em]">Vault Credentials</th>
                   <th className="p-8 text-[10px] font-black text-slate-700 uppercase tracking-[0.3em]">Timestamp</th>
+                  <th className="p-8 text-[10px] font-black text-slate-700 uppercase tracking-[0.3em]">Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-200">
                 {loading ? (
                   <tr>
-                    <td colSpan={5} className="p-20 text-center text-slate-500 font-black uppercase tracking-widest text-xs">
+                    <td colSpan={6} className="p-20 text-center text-slate-500 font-black uppercase tracking-widest text-xs">
                       <div className="flex items-center justify-center gap-4">
                         <Loader2 className="w-5 h-5 animate-spin text-emerald-500" />
                         Synchronizing Data...
@@ -199,7 +222,7 @@ export const AdminDashboard: React.FC = () => {
                   </tr>
                 ) : participants.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="p-20 text-center text-slate-500 font-black uppercase tracking-widest text-xs">
+                    <td colSpan={6} className="p-20 text-center text-slate-500 font-black uppercase tracking-widest text-xs">
                       No Active Participants Detected.
                     </td>
                   </tr>
@@ -299,6 +322,15 @@ export const AdminDashboard: React.FC = () => {
                           <span className="text-[10px] font-black tracking-widest">{new Date(p.timestamp).toLocaleTimeString()}</span>
                         </div>
                       </td>
+                      <td className="p-8">
+                        <button
+                          onClick={() => setDeleteParticipant(p)}
+                          className="w-10 h-10 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-300 rounded-xl flex items-center justify-center text-rose-600 hover:text-rose-700 transition-all group-hover:scale-110"
+                          title="Delete Participant"
+                        >
+                          <Trash2 size={16} />
+                        </button>
+                      </td>
                     </motion.tr>
                   ))
                 )}
@@ -307,6 +339,59 @@ export const AdminDashboard: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {deleteParticipant && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50"
+          onClick={() => setDeleteParticipant(null)}
+        >
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-white rounded-[2rem] p-8 max-w-md mx-4 shadow-2xl border border-slate-200"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="space-y-6">
+              <div className="text-center">
+                <div className="w-16 h-16 bg-rose-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <Trash2 className="w-8 h-8 text-rose-600" />
+                </div>
+                <h3 className="text-xl font-black text-slate-900 mb-2">Delete Participant</h3>
+                <p className="text-slate-600 text-sm">
+                  Are you sure you want to permanently delete <strong>{deleteParticipant.full_name || deleteParticipant.email || `GUEST_${deleteParticipant.id.substring(0, 6)}`}</strong>?
+                  This action cannot be undone.
+                </p>
+              </div>
+              
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setDeleteParticipant(null)}
+                  className="flex-1 px-6 py-3 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-xl text-slate-700 font-bold transition-all"
+                  disabled={deleting}
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => handleDeleteParticipant(deleteParticipant)}
+                  className="flex-1 px-6 py-3 bg-rose-500 hover:bg-rose-600 border border-rose-500 rounded-xl text-white font-bold transition-all disabled:opacity-50"
+                  disabled={deleting}
+                >
+                  {deleting ? (
+                    <div className="flex items-center justify-center gap-2">
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Deleting...
+                    </div>
+                  ) : (
+                    'Delete'
+                  )}
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
     </div>
   );
 };
