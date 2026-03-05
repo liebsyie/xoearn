@@ -135,7 +135,7 @@ export const Cashout: React.FC<CashoutProps> = ({ prize, onComplete }) => {
             <input
               type="text"
               required
-              placeholder="0000-0000-0000"
+              placeholder="00000000000"
               value={idNumber}
               onChange={(e) => setIdNumber(e.target.value)}
               className="w-full p-5 bg-white border border-slate-300 rounded-2xl focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-all font-black text-sm tracking-widest placeholder:text-slate-400 text-slate-900"
