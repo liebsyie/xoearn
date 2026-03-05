@@ -92,7 +92,7 @@ export const Auth: React.FC<AuthProps> = ({ onSuccess, onClose, title = "Sign In
       )}
 
       <div className="text-center mb-10 relative z-10">
-        <h2 className="text-4xl font-black text-white mb-3 tracking-tight leading-tight">
+        <h2 className="text-4xl font-black text-zinc-500 mb-3 tracking-tight leading-tight">
           {mode === 'login' ? title : 'JOIN THE ELITE'}
         </h2>
         <p className="text-zinc-500 text-sm font-medium">
@@ -147,7 +147,7 @@ export const Auth: React.FC<AuthProps> = ({ onSuccess, onClose, title = "Sign In
                     placeholder="Full Name"
                     value={formData.fullName}
                     onChange={handleChange}
-                    className="w-full bg-white/[0.02] border border-white/5 text-white placeholder:text-black pl-14 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:bg-white/[0.04] transition-all"
+                    className="w-full bg-white/20 border border-emerald-500 text-black placeholder:text-black pl-14 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white/[0.04] transition-all"
                     required={mode === 'register'}
                   />
                 </div>
@@ -159,7 +159,7 @@ export const Auth: React.FC<AuthProps> = ({ onSuccess, onClose, title = "Sign In
                     placeholder="Phone Number"
                     value={formData.phone}
                     onChange={handleChange}
-                    className="w-full bg-white/[0.02] border border-white/5 text-white placeholder:text-black pl-14 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:bg-white/[0.04] transition-all"
+                    className="w-full bg-white/20 border border-emerald-500 text-black placeholder:text-black pl-14 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white/[0.04] transition-all"
                     required={mode === 'register'}
                   />
                 </div>
@@ -171,7 +171,7 @@ export const Auth: React.FC<AuthProps> = ({ onSuccess, onClose, title = "Sign In
                       name="birthday"
                       value={formData.birthday}
                       onChange={handleChange}
-                      className="w-full bg-white/[0.02] border border-white/5 text-white pl-14 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:bg-white/[0.04] transition-all text-sm"
+                      className="w-full bg-white/20 border border-emerald-500 text-black pl-14 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white/[0.04] transition-all text-sm"
                       required={mode === 'register'}
                     />
                   </div>
@@ -183,7 +183,7 @@ export const Auth: React.FC<AuthProps> = ({ onSuccess, onClose, title = "Sign In
                       placeholder="Address"
                       value={formData.address}
                       onChange={handleChange}
-                      className="w-full bg-white/[0.02] border border-white/5 text-white placeholder:text-black pl-14 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:bg-white/[0.04] transition-all"
+                      className="w-full bg-white/20 border border-emerald-500 text-black placeholder:text-black pl-14 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white/[0.04] transition-all"
                       required={mode === 'register'}
                     />
                   </div>
@@ -200,7 +200,7 @@ export const Auth: React.FC<AuthProps> = ({ onSuccess, onClose, title = "Sign In
               placeholder="Email Address"
               value={formData.email}
               onChange={handleChange}
-              className="w-full bg-white/[0.02] border border-white/5 text-white placeholder:text-black pl-14 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:bg-white/[0.04] transition-all"
+              className="w-full bg-white/20 border border-emerald-500 text-black placeholder:text-black pl-14 pr-5 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white/[0.04] transition-all"
               required
             />
           </div>
@@ -213,7 +213,7 @@ export const Auth: React.FC<AuthProps> = ({ onSuccess, onClose, title = "Sign In
               placeholder="Password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full bg-white/[0.02] border border-white/5 text-white placeholder:text-black pl-14 pr-14 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:bg-white/[0.04] transition-all"
+              className="w-full bg-white/20 border border-emerald-500 text-black placeholder:text-black pl-14 pr-14 py-4 rounded-2xl focus:outline-none focus:ring-2 focus:ring-emerald-500/50 focus:bg-white/[0.04] transition-all"
               required
             />
             <button
