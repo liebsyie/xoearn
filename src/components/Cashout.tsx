@@ -63,7 +63,7 @@ export const Cashout: React.FC<CashoutProps> = ({ prize, onComplete }) => {
             <div className="h-px bg-slate-200 w-full"></div>
             <div className="flex justify-between items-center">
               <span className="text-[10px] text-slate-600 font-black uppercase tracking-[0.2em]">ETA</span>
-              <span className="text-slate-900 font-black text-sm tracking-tight">2-5 Business Days</span>
+              <span className="text-slate-900 font-black text-sm tracking-tight">3-5 Business Days</span>
             </div>
           </div>
 
