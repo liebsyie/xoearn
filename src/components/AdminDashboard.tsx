@@ -148,7 +148,7 @@ export const AdminDashboard: React.FC = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div className="glass p-6 rounded-2xl border-white/5 space-y-4">
                     <div className="w-10 h-10 bg-zinc-900 rounded-xl flex items-center justify-center font-black text-emerald-500 border border-white/5">01</div>
-                    <p className="text-xs font-bold text-zinc-300">Open your <span className="text-white">Supabase Dashboard</span> and go to Project Settings &gt; API.</p>
+                    <p className="text-xs font-bold text-zinc-300">Open your <span className="text-white">Supabase Dashboard</span> and go to Project Settings &amp;gt; API.</p>
                   </div>
                   <div className="glass p-6 rounded-2xl border-white/5 space-y-4">
                     <div className="w-10 h-10 bg-zinc-900 rounded-xl flex items-center justify-center font-black text-emerald-500 border border-white/5">02</div>
