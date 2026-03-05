@@ -124,10 +124,50 @@ export const AdminDashboard: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="glass border-rose-500/20 bg-rose-500/5 p-6 rounded-[2rem] text-rose-400 text-sm font-black flex items-center gap-4"
+            className="flex flex-col gap-8"
           >
-            <X className="w-5 h-5" />
-            SYSTEM ERROR: {error}
+            <div className="glass border-rose-500/20 bg-rose-500/5 p-8 rounded-[2rem] text-rose-400 text-sm font-black flex items-center gap-4">
+              <X className="w-6 h-6" />
+              SYSTEM ERROR: {error}
+            </div>
+
+            {!isSupabaseConfigured && (
+              <div className="glass-card p-10 rounded-[3rem] space-y-8 border-emerald-500/10">
+                <div className="space-y-2">
+                  <h2 className="text-2xl font-black text-white flex items-center gap-3">
+                    <Shield className="text-emerald-500" />
+                    SUPABASE SETUP GUIDE
+                  </h2>
+                  <p className="text-zinc-500 font-medium text-sm">Follow these steps to connect your database and see your participants.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <div className="glass p-6 rounded-2xl border-white/5 space-y-4">
+                    <div className="w-10 h-10 bg-zinc-900 rounded-xl flex items-center justify-center font-black text-emerald-500 border border-white/5">01</div>
+                    <p className="text-xs font-bold text-zinc-300">Open your <span className="text-white">Supabase Dashboard</span> and go to Project Settings > API.</p>
+                  </div>
+                  <div className="glass p-6 rounded-2xl border-white/5 space-y-4">
+                    <div className="w-10 h-10 bg-zinc-900 rounded-xl flex items-center justify-center font-black text-emerald-500 border border-white/5">02</div>
+                    <p className="text-xs font-bold text-zinc-300">Copy the <span className="text-white">Project URL</span> and <span className="text-white">anon public Key</span>.</p>
+                  </div>
+                  <div className="glass p-6 rounded-2xl border-white/5 space-y-4">
+                    <div className="w-10 h-10 bg-zinc-900 rounded-xl flex items-center justify-center font-black text-emerald-500 border border-white/5">03</div>
+                    <p className="text-xs font-bold text-zinc-300">Add them to your <span className="text-white">.env</span> file or <span className="text-white">Vercel Settings</span> as:</p>
+                    <div className="bg-black/50 p-3 rounded-lg font-mono text-[9px] text-emerald-400 space-y-1">
+                      <p>VITE_SUPABASE_URL=...</p>
+                      <p>VITE_SUPABASE_ANON_KEY=...</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-emerald-500/5 border border-emerald-500/10 p-6 rounded-2xl">
+                  <p className="text-[10px] text-emerald-500 font-black uppercase tracking-widest mb-2">Important Note</p>
+                  <p className="text-xs text-zinc-500 leading-relaxed">
+                    Make sure the variable names start with <span className="text-white font-bold">VITE_</span>. Without this prefix, the frontend application will not be able to read the keys for security reasons.
+                  </p>
+                </div>
+              </div>
+            )}
           </motion.div>
         )}
 
